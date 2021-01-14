@@ -8,5 +8,5 @@ dependencies {
     compile(kotlin("stdlib"))
     compile(okHttp())
 
-    testImplementation(jUnit())
+    testImplementation(JUnit.junit)
 }

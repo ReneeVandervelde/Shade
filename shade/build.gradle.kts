@@ -14,6 +14,6 @@ dependencies {
     compile(project(":auth"))
 
     compile(kotlin("stdlib"))
-    compile(coroutines())
+    compile(KotlinX.Coroutines.core)
     compile(atomicFU())
 }

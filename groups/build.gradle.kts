@@ -13,7 +13,7 @@ dependencies {
     compile(project(":lights"))
 
     compile(kotlin("stdlib"))
-    compile(coroutines())
+    compile(KotlinX.Coroutines.core)
 
     implementation(retrofit())
     implementation(retrofit("converter-moshi"))

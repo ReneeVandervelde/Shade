@@ -13,5 +13,5 @@ dependencies {
     compile("com.github.ajalt.colormath:colormath:2.0.0")
     compile(threeTen())
 
-    testImplementation(jUnit())
+    testImplementation(JUnit.junit)
 }

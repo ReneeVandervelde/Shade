@@ -12,7 +12,7 @@ dependencies {
     compile(project(":auth"))
 
     compile(kotlin("stdlib"))
-    compile(coroutines())
+    compile(KotlinX.Coroutines.core)
 
     implementation(retrofit())
     implementation(retrofit("converter-moshi"))
@@ -22,5 +22,5 @@ dependencies {
     compile(okHttp())
     compile(threeTen())
 
-    testImplementation(jUnit())
+    testImplementation(JUnit.junit)
 }

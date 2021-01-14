@@ -10,7 +10,7 @@ dependencies {
     compile(project(":hue-constructs"))
 
     compile(kotlin("stdlib"))
-    compile(coroutines())
+    compile(KotlinX.Coroutines.core)
 
     implementation(retrofit())
     implementation(retrofit("converter-moshi"))

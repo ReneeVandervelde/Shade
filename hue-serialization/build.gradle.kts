@@ -9,7 +9,7 @@ dependencies {
     compile(project(":hue-constructs"))
 
     compile(kotlin("stdlib"))
-    compile(coroutines())
+    compile(KotlinX.Coroutines.core)
 
     compile(moshi())
     kapt(moshi("moshi-kotlin-codegen"))
@@ -18,5 +18,5 @@ dependencies {
 
     implementation(threeTen())
 
-    testImplementation(jUnit())
+    testImplementation(JUnit.junit)
 }
