@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.4.20"))
+        classpath(kotlin("gradle-plugin", version = "1.4.21"))
         classpath(atomicFU("gradle-plugin"))
     }
 }
