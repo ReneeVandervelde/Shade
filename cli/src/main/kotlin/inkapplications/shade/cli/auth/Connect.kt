@@ -8,8 +8,10 @@ import inkapplications.shade.Shade
 import inkapplications.shade.discover.Device
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 @Reusable
+@OptIn(ExperimentalTime::class)
 class Connect @Inject constructor(
     private val shade: Shade
 ): CliktCommand(

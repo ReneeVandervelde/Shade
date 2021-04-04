@@ -1,21 +1,26 @@
 plugins {
-    kotlin("jvm")
-    kotlin("kapt")
+    kotlin("multiplatform")
+    serialization
 }
 
-publishJava()
+kotlin {
+    jvm()
 
-dependencies {
-    implementation(project(":hue-serialization"))
-    compile(project(":hue-constructs"))
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                api(project(":hue-constructs"))
+                api(KotlinX.Coroutines.core)
+                implementation(KotlinX.Serialization.json)
+                implementation(Ktor.client)
+                implementation(Ktor.clientSerialization)
+            }
+        }
 
-    compile(kotlin("stdlib"))
-    compile(KotlinX.Coroutines.core)
-
-    implementation(retrofit())
-    implementation(retrofit("converter-moshi"))
-    implementation(moshi())
-    kapt(moshi("moshi-kotlin-codegen"))
-
-    compile(okHttp())
+        val jvmMain by getting {
+            dependencies {
+                implementation(Ktor.clientOkHttp)
+            }
+        }
+    }
 }

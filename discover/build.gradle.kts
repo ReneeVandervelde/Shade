@@ -1,21 +1,26 @@
 plugins {
-    kotlin("jvm")
-    kotlin("kapt")
+    kotlin("multiplatform")
+    serialization
 }
 
-publishJava()
+kotlin {
+    jvm()
 
-dependencies {
-    compile(kotlin("stdlib"))
-    compile(KotlinX.Coroutines.core)
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                api(KotlinX.Coroutines.core)
 
-    implementation(retrofit())
-    implementation(retrofit("converter-moshi"))
-    implementation(moshi())
-    implementation(moshi("moshi-adapters"))
-    kapt(moshi("moshi-kotlin-codegen"))
+                implementation(KotlinX.Serialization.json)
+                implementation(Ktor.client)
+                implementation(Ktor.clientSerialization)
+            }
+        }
 
-    compile(okHttp())
-
-    testImplementation(JUnit.junit)
+        val jvmMain by getting {
+            dependencies {
+                implementation(Ktor.clientOkHttp)
+            }
+        }
+    }
 }

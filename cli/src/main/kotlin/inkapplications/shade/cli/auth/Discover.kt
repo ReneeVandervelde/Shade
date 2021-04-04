@@ -5,8 +5,11 @@ import dagger.Reusable
 import inkapplications.shade.Shade
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
-@Reusable class Discover @Inject constructor(
+@Reusable
+@OptIn(ExperimentalTime::class)
+class Discover @Inject constructor(
     private val shade: Shade
 ): CliktCommand(
     name = "discover",

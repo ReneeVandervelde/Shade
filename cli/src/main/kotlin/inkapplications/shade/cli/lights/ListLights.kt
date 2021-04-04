@@ -5,8 +5,10 @@ import dagger.Reusable
 import inkapplications.shade.Shade
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
+import kotlin.time.ExperimentalTime
 
 @Reusable
+@OptIn(ExperimentalTime::class)
 class ListLights @Inject constructor(
     private val shade: Shade
 ): CliktCommand(

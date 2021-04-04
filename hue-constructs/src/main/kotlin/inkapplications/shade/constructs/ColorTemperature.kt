@@ -1,10 +1,14 @@
 package inkapplications.shade.constructs
 
+import inkapplications.shade.constructs.serialization.MiredSerializer
+import kotlinx.serialization.Serializable
+
 /**
  * Color temperature units.
  *
  * @param kelvinValue Color temperature in kelvin. Base unit to reduce rounding errors.
  */
+@Serializable(with = MiredSerializer::class)
 data class ColorTemperature internal constructor(val kelvinValue: Int): Comparable<ColorTemperature> {
     /**
      * Value in Mireds. Base unit of the Hue API.

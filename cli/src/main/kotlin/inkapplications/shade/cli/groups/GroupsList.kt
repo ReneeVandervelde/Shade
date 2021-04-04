@@ -5,8 +5,10 @@ import dagger.Reusable
 import inkapplications.shade.Shade
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 @Reusable
+@OptIn(ExperimentalTime::class)
 class GroupsList @Inject constructor(
     private val shade: Shade
 ): CliktCommand(

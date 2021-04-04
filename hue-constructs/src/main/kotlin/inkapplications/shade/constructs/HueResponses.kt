@@ -1,6 +1,6 @@
 package inkapplications.shade.constructs
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
 /**
  * Responses from the Hue API.
@@ -8,10 +8,10 @@ import com.squareup.moshi.JsonClass
  * Responses spit out an array of either success or error objects.
  * Maybe both? Who knows!
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class HueResult<T>(
-    val success: T?,
-    val error: HueError?
+    val success: T? = null,
+    val error: HueError? = null,
 )
 
 /**

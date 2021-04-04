@@ -1,19 +1,28 @@
 plugins {
-    kotlin("jvm")
-    id("kotlinx-atomicfu")
+    kotlin("multiplatform")
 }
 
-publishJava()
+kotlin {
+    jvm()
 
-dependencies {
-    compile(project(":discover"))
-    compile(project(":lights"))
-    compile(project(":groups"))
-    compile(project(":scenes"))
-    compile(project(":schedules"))
-    compile(project(":auth"))
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                api(KotlinX.Coroutines.core)
+                api(KotlinX.Coroutines.core)
+                implementation("com.github.inkapplications.subatomic:core:1.0.0")
+            }
+        }
 
-    compile(kotlin("stdlib"))
-    compile(KotlinX.Coroutines.core)
-    compile(atomicFU())
+        val jvmMain by getting {
+            dependencies {
+                api(project(":discover"))
+                api(project(":lights"))
+                api(project(":groups"))
+                api(project(":scenes"))
+                api(project(":schedules"))
+                api(project(":auth"))
+            }
+        }
+    }
 }

@@ -7,8 +7,11 @@ import dagger.Reusable
 import inkapplications.shade.Shade
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
-@Reusable class LightSceneUpdate @Inject constructor(
+@Reusable
+@OptIn(ExperimentalTime::class)
+class LightSceneUpdate @Inject constructor(
     private val shade: Shade
 ): CliktCommand(
     name = "scenes:update:lights",

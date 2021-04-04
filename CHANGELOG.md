@@ -1,6 +1,33 @@
 Change Log
 ==========
 
+2.0.0
+-----
+
+Version 2 of Shade is a multi-platform rewrite of the library.
+Because of this, JVM-specific dependencies have been removed in favor of
+some multi-platform types.
+Breaking API changes are kept to a minimum where possible. Previously
+deprecated references are now compile errors.
+
+### Changed:
+ - ThreeTen date and time objects have been replaced with [kotlinx-datetime]
+ - `Instant` types converted to `LocalDateTime` types, due to lack of timezone support
+ - `LightState.brightness` is now nullable.
+ - Scene `data` fields are now strictly typed as an `AppData` object, rather
+   than a key/value map.
+ - Serialization module has been merged into structures module.
+
+
+### Removed:
+ - OkHttp has been removed, and subsequently references to the client have been
+   removed from the API, including the `http` module.
+ - `UpdateState.lastInstall` has been removed in favor of the nullable
+   `UpdateState.lastKnownInstall`
+ - `Schedule.time` is now an error in favor of `localTime`
+
+[kotlinx-datetime]: https://github.com/Kotlin/kotlinx-datetime
+
 1.2.0
 -----
 

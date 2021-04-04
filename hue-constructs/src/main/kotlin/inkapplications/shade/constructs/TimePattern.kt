@@ -1,6 +1,20 @@
 package inkapplications.shade.constructs
 
-import org.threeten.bp.*
+import inkapplications.shade.constructs.serialization.TimePatternSerializer
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalDateTime
+import kotlinx.serialization.Serializable
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+
+data class LocalTime(
+    val hour: Int,
+    val minute: Int,
+    val second: Int,
+): Comparable<LocalTime> {
+    private val spanSeconds = second + (minute * 60) + (hour * 60 * 60)
+    override fun compareTo(other: LocalTime): Int = spanSeconds.compareTo(other.spanSeconds)
+}
 
 /**
  * Abstraction of all of the various types of date/times that Hue handles.
@@ -8,18 +22,37 @@ import org.threeten.bp.*
  * These are all documented exceptionally poorly in Hue's Documentation.
  * Please report any bugs found with this.
  */
+@Serializable(with = TimePatternSerializer::class)
 sealed class TimePattern {
     /**
      * An exact specified time.
      *
      * This time should be local to the hub. UTC times are deprecated in the Schedule API's
      */
-    data class AbsoluteTime(val time: LocalDateTime): TimePattern()
+    data class AbsoluteTime(
+        val time: LocalDateTime
+    ): TimePattern()
 
     /**
      * A time range when an event can happen randomly inside of.
      */
-    data class RandomizedTime(val date: LocalDate, val timeRange: ClosedRange<LocalTime>): TimePattern()
+    data class RandomizedTime(
+        val range: ClosedRange<LocalDateTime>,
+    ): TimePattern() {
+        @Deprecated(
+            message = "Parameter consolidated to single LocalDateTime range",
+            replaceWith = ReplaceWith("range"),
+            level = DeprecationLevel.ERROR
+        )
+        val timeRange: Nothing get() = throw UnsupportedOperationException("")
+
+        @Deprecated(
+            message = "Parameter consolidated to single LocalDateTime range",
+            replaceWith = ReplaceWith("range.start.date"),
+            level = DeprecationLevel.ERROR
+        )
+        val date: Nothing get() = throw UnsupportedOperationException("")
+    }
 
     /**
      * Every specified day of the week at a specified time.
@@ -45,6 +78,7 @@ sealed class TimePattern {
     /**
      * Abstraction for the various types of timers.
      */
+    @ExperimentalTime
     sealed class Timer: TimePattern() {
         /**
          * Timer expiring after the specified time.

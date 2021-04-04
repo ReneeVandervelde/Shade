@@ -13,10 +13,12 @@ import inkapplications.shade.constructs.kelvin
 import inkapplications.shade.constructs.percent
 import inkapplications.shade.groups.GroupStateModification
 import kotlinx.coroutines.runBlocking
-import org.threeten.bp.Duration
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
 
 @Reusable
+@OptIn(ExperimentalTime::class)
 class GroupsControl @Inject constructor(
     private val shade: Shade
 ): CliktCommand(
@@ -52,7 +54,7 @@ class GroupsControl @Inject constructor(
                 on = on,
                 brightness = brightness?.percent,
                 colorTemperature = colorTemperature?.kelvin,
-                transitionTime = transitionTime?.let(Duration::ofMillis)
+                transitionTime = transitionTime?.milliseconds
             ))
 
         }

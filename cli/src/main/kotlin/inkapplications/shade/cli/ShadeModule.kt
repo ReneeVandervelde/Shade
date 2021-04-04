@@ -5,8 +5,10 @@ import dagger.Provides
 import dagger.Reusable
 import inkapplications.shade.Shade
 import inkapplications.shade.cli.auth.FileStorage
+import kotlin.time.ExperimentalTime
 
 @Module
+@OptIn(ExperimentalTime::class)
 class ShadeModule {
     @Provides
     @Reusable

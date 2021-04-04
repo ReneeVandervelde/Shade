@@ -1,5 +1,10 @@
 package inkapplications.shade.constructs
 
+import inkapplications.shade.constructs.serialization.DelegatedSerializer
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.serializer
+
 private const val MAX_VALUE = 254
 
 /**
@@ -7,10 +12,20 @@ private const val MAX_VALUE = 254
  *
  * @param byteValue an unsigned byte value, unit for the Hue API.
  */
+@Serializable(with = PercentageSerializer::class)
 data class Percentage internal constructor(val byteValue: UByte): Comparable<Percentage> {
     val fractionalValue: Float = byteValue.toFloat() / MAX_VALUE.toFloat()
 
     override fun compareTo(other: Percentage): Int = byteValue.compareTo(other.byteValue)
+}
+
+/**
+ * Serializes a percentage as a byte contained in an integer.
+ */
+internal object PercentageSerializer: DelegatedSerializer<Percentage, Int>() {
+    override val backingSerializer: KSerializer<Int> = Int.serializer()
+    override fun deserialize(value: Int): Percentage = value.bytePercentage
+    override fun serialize(value: Percentage): Int = value.byteValue.toInt()
 }
 
 /**

@@ -13,10 +13,13 @@ import inkapplications.shade.constructs.kelvin
 import inkapplications.shade.constructs.percent
 import inkapplications.shade.lights.LightStateModification
 import kotlinx.coroutines.runBlocking
-import org.threeten.bp.Duration
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
 
-@Reusable class LightControl @Inject constructor(
+@Reusable
+@OptIn(ExperimentalTime::class)
+class LightControl @Inject constructor(
     private val shade: Shade
 ): CliktCommand(
     name = "lights:control",
@@ -51,7 +54,7 @@ import javax.inject.Inject
                 on = on,
                 brightness = brightness?.percent,
                 colorTemperature = colorTemperature?.kelvin,
-                transitionTime = transitionTime?.let(Duration::ofMillis)
+                transitionTime = transitionTime?.milliseconds
             )
             shade.lights.setState(light, modification)
         }

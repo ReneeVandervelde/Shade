@@ -1,18 +1,19 @@
 package inkapplications.shade.constructs
 
 import com.github.ajalt.colormath.Color
-import com.squareup.moshi.JsonClass
+import inkapplications.shade.constructs.serialization.CoordinateListSerializer
+import kotlinx.serialization.Serializable
 
 /**
  * X/Y in a CIE xyY coordinate.
  *
  * These are used throughout the API to convey Gamut locations.
  */
-@JsonClass(generateAdapter = true)
+@Serializable(with = CoordinateListSerializer::class)
 data class Coordinates(val x: Float, val y: Float) {
     constructor(color: Color): this(
         x = color.xyy().first.toFloat(),
-        y = color.xyy().second.toFloat()
+        y = color.xyy().second.toFloat(),
     )
 }
 

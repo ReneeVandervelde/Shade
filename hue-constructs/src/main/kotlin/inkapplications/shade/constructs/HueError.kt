@@ -1,6 +1,6 @@
 package inkapplications.shade.constructs
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
 /**
  * Errors from the Hue API.
@@ -19,7 +19,7 @@ import com.squareup.moshi.JsonClass
  * @property address Good lord, who knows. Maybe a reference ID?
  * @property description A user-readable description of the error.
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class HueError(
     val type: Int,
     val address: String,
