@@ -24,8 +24,11 @@ class ShadeLightsModule {
             defaultRequest {
                 url("$baseUrl${url.encodedPath.trimStart('/')}")
             }
+            val json = kotlinx.serialization.json.Json {
+                ignoreUnknownKeys = true
+            }
             install(JsonFeature) {
-                serializer = KotlinxSerializer()
+                serializer = KotlinxSerializer(json)
             }
         }
         val api = KtorHueLightsApi(httpClient)

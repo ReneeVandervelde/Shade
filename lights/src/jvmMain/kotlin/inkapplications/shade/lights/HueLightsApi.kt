@@ -1,6 +1,7 @@
 package inkapplications.shade.lights
 
 import inkapplications.shade.constructs.*
+import inkapplications.shade.constructs.serialization.ColorTemperatureRangeSerializer
 import inkapplications.shade.constructs.serialization.DurationDecisecondSerializer
 import inkapplications.shade.constructs.serialization.LocalDateTimeSerializer
 import inkapplications.shade.lights.AlertState.*
@@ -33,7 +34,7 @@ internal fun createHueLightsStatePath(
 fun createLightModificationCommand(
     token: String,
     light: String,
-    modification: LightStateModification
+    modification: LightStateModification,
 ) = Command(
     address = createHueLightsStatePath(token, light),
     method = "PUT",
@@ -56,7 +57,7 @@ internal interface HueLightsApi {
     suspend fun setState(
         token: String,
         lightId: String,
-        modification: LightStateModification
+        modification: LightStateModification,
     ): HueResponse<HueProperties>
 
     /**
@@ -115,7 +116,7 @@ internal interface HueLightsApi {
     suspend fun setLightAttributes(
         token: String,
         lightId: String,
-        attributes: DeviceAttributes
+        attributes: DeviceAttributes,
     ): HueResponse<HueProperties>
 
     /**
@@ -123,7 +124,7 @@ internal interface HueLightsApi {
      */
     suspend fun delete(
         token: String,
-        lightId: String
+        lightId: String,
     ): HueResponse<String>
 }
 
@@ -150,16 +151,32 @@ internal interface HueLightsApi {
 @Serializable
 data class Light(
     val state: LightState,
-    @SerialName("swupdate") val updateState: UpdateState,
+
+    @SerialName("swupdate")
+    val updateState: UpdateState,
+
     val type: String,
+
     val name: String,
-    @SerialName("modelid") val modelId: String,
-    @SerialName("manufacturername") val manufacturer: String,
-    @SerialName("productname") val productName: String,
+
+    @SerialName("modelid")
+    val modelId: String,
+
+    @SerialName("manufacturername")
+    val manufacturer: String,
+
+    @SerialName("productname")
+    val productName: String,
+
     val capabilities: Capabilities,
+
     val config: LightConfig,
-    @SerialName("uniqueid") val uuid: String,
-    @SerialName("swversion") val softwareVersion: String
+
+    @SerialName("uniqueid")
+    val uuid: String,
+
+    @SerialName("swversion")
+    val softwareVersion: String,
 )
 
 /**
@@ -172,8 +189,8 @@ data class Light(
 @Serializable
 data class Capabilities(
     val certified: Boolean,
-    val control: ControlCapabilities?,
-    val streaming: StreamingCapabilities?
+    val control: ControlCapabilities? = null,
+    val streaming: StreamingCapabilities? = null,
 )
 
 /**
@@ -187,7 +204,7 @@ data class Capabilities(
 @Serializable
 data class StreamingCapabilities(
     val renderer: Boolean,
-    val proxy: Boolean
+    val proxy: Boolean,
 )
 
 /**
@@ -200,10 +217,10 @@ data class StreamingCapabilities(
  */
 @Serializable
 data class LightConfig(
-    val archetype: String?,
-    val function: String?,
-    val direction: String?,
-    val startup: LightStartupConfig?
+    val archetype: String? = null,
+    val function: String? = null,
+    val direction: String? = null,
+    val startup: LightStartupConfig? = null,
 )
 
 /**
@@ -217,8 +234,11 @@ data class LightConfig(
 @Serializable
 data class LightStartupConfig(
     val mode: String,
+
     val configured: Boolean,
-    @SerialName("customsettings") val customSettings: LightCustomStartupSettings?
+
+    @SerialName("customsettings")
+    val customSettings: LightCustomStartupSettings? = null,
 )
 
 /**
@@ -245,11 +265,19 @@ data class LightStartupConfig(
  */
 @Serializable
 data class LightCustomStartupSettings(
-    @SerialName("bri") val brightness: Percentage?,
-    @SerialName("xy") val cieColorCoordinates: Coordinates?,
-    @SerialName("ct") val colorTemperature: ColorTemperature?,
-    val hue: Int?,
-    @SerialName("sat") val saturation: Percentage?
+    @SerialName("bri")
+    val brightness: Percentage? = null,
+
+    @SerialName("xy")
+    val cieColorCoordinates: Coordinates? = null,
+
+    @SerialName("ct")
+    val colorTemperature: ColorTemperature? = null,
+
+    val hue: Int? = null,
+
+    @SerialName("sat")
+    val saturation: Percentage? = null,
 )
 
 /**
@@ -265,11 +293,21 @@ data class LightCustomStartupSettings(
  */
 @Serializable
 data class ControlCapabilities(
-    @SerialName("mindimlevel") val minimumDimLevel: Int?,
-    @SerialName("maxlumen") val maximumLumens: Int?,
-    @SerialName("colorgamuttype") val colorGamutType: String?,
-    @SerialName("colorgamut") val colorGamut: List<Coordinates>?,
-    @SerialName("ct") val colorTemperatures: ClosedRange<ColorTemperature>?
+    @SerialName("mindimlevel")
+    val minimumDimLevel: Int? = null,
+
+    @SerialName("maxlumen")
+    val maximumLumens: Int? = null,
+
+    @SerialName("colorgamuttype")
+    val colorGamutType: String? = null,
+
+    @SerialName("colorgamut")
+    val colorGamut: List<Coordinates>? = null,
+
+    @Serializable(with = ColorTemperatureRangeSerializer::class)
+    @SerialName("ct")
+    val colorTemperatures: ClosedRange<ColorTemperature>? = null,
 )
 
 /**
@@ -282,9 +320,10 @@ data class ControlCapabilities(
 @Serializable
 data class UpdateState(
     val state: String,
+
     @Serializable(with = LocalDateTimeSerializer::class)
     @SerialName("lastinstall")
-    val lastKnownInstall: LocalDateTime?,
+    val lastKnownInstall: LocalDateTime? = null,
 ) {
     @Deprecated(
         message = "Use the nullable `lastKnownInstall` field",
@@ -334,16 +373,31 @@ data class UpdateState(
 @Serializable
 data class LightState(
     val on: Boolean,
-    @SerialName("bri") val brightness: Percentage?,
-    val hue: Int?,
-    @SerialName("sat") val saturation: Percentage?,
-    val effect: LightEffect?,
-    @SerialName("xy") val cieColorCoordinates: Coordinates?,
-    @SerialName("ct") val colorTemperature: ColorTemperature?,
-    val alert: AlertState?,
-    @SerialName("colormode") val colorMode: ColorMode?,
-    val mode: String?,
-    val reachable: Boolean?
+
+    @SerialName("bri")
+    val brightness: Percentage? = null,
+
+    val hue: Int? = null,
+
+    @SerialName("sat")
+    val saturation: Percentage? = null,
+
+    val effect: LightEffect? = null,
+
+    @SerialName("xy")
+    val cieColorCoordinates: Coordinates? = null,
+
+    @SerialName("ct")
+    val colorTemperature: ColorTemperature? = null,
+
+    val alert: AlertState? = null,
+
+    @SerialName("colormode")
+    val colorMode: ColorMode? = null,
+
+    val mode: String? = null,
+
+    val reachable: Boolean? = null,
 )
 
 /**
@@ -420,21 +474,43 @@ data class LightState(
 @Serializable
 data class LightStateModification(
     val on: Boolean? = null,
-    @SerialName("bri") val brightness: Percentage? = null,
+
+    @SerialName("bri")
+    val brightness: Percentage? = null,
+
     val hue: Int? = null,
-    @SerialName("sat") val saturation: Percentage? = null,
+
+    @SerialName("sat")
+    val saturation: Percentage? = null,
+
     val effect: LightEffect? = null,
+
     @SerialName("transitiontime")
     @Serializable(with = DurationDecisecondSerializer::class)
     val transitionTime: Duration? = null,
-    @SerialName("xy") val cieColorCoordinates: Coordinates? = null,
-    @SerialName("ct") val colorTemperature: ColorTemperature? = null,
+
+    @SerialName("xy")
+    val cieColorCoordinates: Coordinates? = null,
+
+    @SerialName("ct")
+    val colorTemperature: ColorTemperature? = null,
+
     val alert: AlertState? = null,
-    @SerialName("bri_inc") val brightnessIncrement: Percentage? = null,
-    @SerialName("sat_inc") val saturationIncrement: Percentage? = null,
-    @SerialName("hue_inc") val hueIncrement: Int? = null,
-    @SerialName("ct_inc") val colorTemperatureIncrement: ColorTemperature? = null,
-    @SerialName("xy_inc") val cieCoordinateTranslation: Coordinates? = null
+
+    @SerialName("bri_inc")
+    val brightnessIncrement: Percentage? = null,
+
+    @SerialName("sat_inc")
+    val saturationIncrement: Percentage? = null,
+
+    @SerialName("hue_inc")
+    val hueIncrement: Int? = null,
+
+    @SerialName("ct_inc")
+    val colorTemperatureIncrement: ColorTemperature? = null,
+
+    @SerialName("xy_inc")
+    val cieCoordinateTranslation: Coordinates? = null,
 )
 
 /**
@@ -486,5 +562,6 @@ enum class AlertState {
  */
 @Serializable
 internal data class LightSearchCriteria(
-    @SerialName("deviceid") val deviceId: List<String>
+    @SerialName("deviceid")
+    val deviceId: List<String>,
 )
