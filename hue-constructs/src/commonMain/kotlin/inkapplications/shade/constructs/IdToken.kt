@@ -1,6 +1,6 @@
 package inkapplications.shade.constructs
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
 /**
  * Just an object containing an ID
@@ -9,5 +9,5 @@ import com.squareup.moshi.JsonClass
  *
  * @param id The ID of the referenced object in Hue's system.
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class IdToken(val id: String)

@@ -1,6 +1,6 @@
 package inkapplications.shade.constructs
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
 /**
  * Attributes for a device.
@@ -11,5 +11,5 @@ import com.squareup.moshi.JsonClass
  *
  * @param name The user-readable name of the device.
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class DeviceAttributes(val name: String)
