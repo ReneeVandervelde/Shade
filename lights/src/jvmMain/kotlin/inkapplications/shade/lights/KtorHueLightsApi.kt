@@ -1,12 +1,12 @@
 package inkapplications.shade.lights
 
 import inkapplications.shade.constructs.DeviceAttributes
-import inkapplications.shade.constructs.HueProperties
 import inkapplications.shade.constructs.HueResponse
 import inkapplications.shade.constructs.Scan
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlinx.serialization.json.JsonObject
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -19,7 +19,7 @@ internal class KtorHueLightsApi(
         }
     }
 
-    override suspend fun setState(token: String, lightId: String, modification: LightStateModification): HueResponse<HueProperties> {
+    override suspend fun setState(token: String, lightId: String, modification: LightStateModification): HueResponse<JsonObject> {
         return client.put(createHueLightsStatePath(token, lightId)) {
             accept(ContentType.Application.Json)
             contentType(ContentType.Application.Json)
@@ -33,7 +33,7 @@ internal class KtorHueLightsApi(
         }
     }
 
-    override suspend fun searchLights(token: String, criteria: LightSearchCriteria): HueResponse<HueProperties> {
+    override suspend fun searchLights(token: String, criteria: LightSearchCriteria): HueResponse<JsonObject> {
         return client.post("api/$token/lights") {
             accept(ContentType.Application.Json)
             contentType(ContentType.Application.Json)
@@ -41,7 +41,7 @@ internal class KtorHueLightsApi(
         }
     }
 
-    override suspend fun searchLights(token: String): HueResponse<HueProperties> {
+    override suspend fun searchLights(token: String): HueResponse<JsonObject> {
         return client.post("api/$token/lights") {
             accept(ContentType.Application.Json)
         }
@@ -53,7 +53,7 @@ internal class KtorHueLightsApi(
         }
     }
 
-    override suspend fun setLightAttributes(token: String, lightId: String, attributes: DeviceAttributes): HueResponse<HueProperties> {
+    override suspend fun setLightAttributes(token: String, lightId: String, attributes: DeviceAttributes): HueResponse<JsonObject> {
         return client.put("api/$token/lights/$lightId") {
             accept(ContentType.Application.Json)
             contentType(ContentType.Application.Json)

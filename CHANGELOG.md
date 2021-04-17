@@ -25,6 +25,8 @@ deprecated references are now compile errors.
  - `UpdateState.lastInstall` has been removed in favor of the nullable
    `UpdateState.lastKnownInstall`
  - `Schedule.time` is now an error in favor of `localTime`
+ - `HueProperties`, not used by the public API, has been removed
+ - `ShadeCompositeException` no longer has `printStackTrace` methods.
 
 [kotlinx-datetime]: https://github.com/Kotlin/kotlinx-datetime
 

@@ -1,12 +1,12 @@
 package inkapplications.shade.schedules
 
-import inkapplications.shade.constructs.HueProperties
 import inkapplications.shade.constructs.HueResponse
 import inkapplications.shade.constructs.HueResult
 import inkapplications.shade.constructs.IdToken
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlinx.serialization.json.JsonObject
 
 internal class KtorHueSchedulesApi(
     private val client: HttpClient,
@@ -24,7 +24,7 @@ internal class KtorHueSchedulesApi(
         }
     }
 
-    override suspend fun updateSchedule(token: String, schedule: String, modification: ScheduleModification): HueResponse<HueProperties> {
+    override suspend fun updateSchedule(token: String, schedule: String, modification: ScheduleModification): HueResponse<JsonObject> {
         return client.put("api/$token/schedules/$schedule") {
             accept(ContentType.Application.Json)
             contentType(ContentType.Application.Json)

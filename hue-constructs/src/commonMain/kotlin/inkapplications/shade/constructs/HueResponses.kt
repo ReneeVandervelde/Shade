@@ -17,7 +17,7 @@ data class HueResult<T>(
 /**
  * A List of results, as seems standard for Hue to respond with.
  */
-typealias HueResponse<T> = @JvmSuppressWildcards List<HueResult<T>>
+typealias HueResponse<T> = List<HueResult<T>>
 
 /**
  * Throw an exception if the result contains an error.
@@ -53,11 +53,3 @@ fun <T: Any> HueResponse<T>.getOrThrow(): List<T> {
     throwOnFailure()
     return mapNotNull { it.success }
 }
-
-/**
- * A Key/Value map of property paths to their value.
- *
- * This is used a lot in response bodies from the Hue API, but isn't very
- * useful since it's polymorphic and tightly coupled to the request path.
- */
-typealias HueProperties = Map<String, Any?>

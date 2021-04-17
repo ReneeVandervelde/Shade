@@ -1,12 +1,12 @@
 package inkapplications.shade.scenes
 
-import inkapplications.shade.constructs.HueProperties
 import inkapplications.shade.constructs.HueResponse
 import inkapplications.shade.constructs.HueResult
 import inkapplications.shade.constructs.IdToken
 import inkapplications.shade.constructs.serialization.LocalDateTimeSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 import java.time.LocalDateTime
 
 internal interface HueScenesApi {
@@ -14,8 +14,8 @@ internal interface HueScenesApi {
     suspend fun createScene(token: String, scene: CreateScene): List<HueResult<IdToken>>
     suspend fun getScene(token: String, sceneId: String): Scene
     suspend fun deleteScene(token: String, sceneId: String): HueResponse<String>
-    suspend fun updateScene(token: String, sceneId: String, scene: UpdateScene.LightScene): HueResponse<HueProperties>
-    suspend fun updateScene(token: String, sceneId: String, scene: UpdateScene.GroupScene): HueResponse<HueProperties>
+    suspend fun updateScene(token: String, sceneId: String, scene: UpdateScene.LightScene): HueResponse<JsonObject>
+    suspend fun updateScene(token: String, sceneId: String, scene: UpdateScene.GroupScene): HueResponse<JsonObject>
 }
 
 @Serializable

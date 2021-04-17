@@ -130,7 +130,7 @@ object RecurringTimeTransformer {
             .format(ISO8601.TIME_LOCAL_COMPLETE)
         val days = data.days.map { it.flag }.sum()
 
-        return "W%03d/T%s".format(days, time)
+        return "W${days.pad(3)}/T$time"
     }
 }
 
@@ -169,7 +169,7 @@ object RecurringRandomizedTimeTransformer {
             .format(ISO8601.TIME_LOCAL_COMPLETE)
         val days = data.days.map { it.flag }.sum()
 
-        return "W%03d/T%sA%s".format(days, startTime, endTime)
+        return "W${days.pad(3)}/T${startTime}A${endTime}"
     }
 }
 
@@ -207,7 +207,7 @@ object TimeIntervalTransformer {
             .format(ISO8601.TIME_LOCAL_COMPLETE)
         val days = data.days?.map { it.flag }?.sum()
 
-        return if (days != null) "W%03d/T%s/T%s".format(days, startTime, endTime) else "T%s/T%s".format(startTime, endTime)
+        return if (days != null) "W${days.pad(3)}/T${startTime}/T${endTime}" else "T$startTime/T$endTime"
     }
 }
 
@@ -232,7 +232,7 @@ object ExpiringTimerTransformer {
             .let(::TimeSpan)
             .let(ISO8601.TIME_LOCAL_COMPLETE::format)
 
-        return "PT%s".format(time)
+        return "PT$time"
     }
 }
 
@@ -266,7 +266,7 @@ object RandomExpiringTimerTransformer {
             .let(::TimeSpan)
             .let(ISO8601.TIME_LOCAL_COMPLETE::format)
 
-        return "PT%sA%s".format(startTime, endTime)
+        return "PT${startTime}A${endTime}"
     }
 }
 
@@ -293,7 +293,7 @@ object RecurringTimerTransformer {
             .let(ISO8601.TIME_LOCAL_COMPLETE::format)
         val occurrences = data.occurrences
 
-        return if (occurrences != null) "R%02d/PT%s".format(occurrences, time) else  "R/PT%s".format(time)
+        return if (occurrences != null) "R${occurrences.pad(2)}/PT$time" else  "R/PT$time"
     }
 }
 
@@ -327,7 +327,17 @@ object RandomRecurringTimerTransformer {
             .let(ISO8601.TIME_LOCAL_COMPLETE::format)
         val occurrences = data.occurrences
 
-        return if (occurrences != null) "R%02d/PT%sA%s".format(occurrences, startTime, endTime) else  "R/PT%sA%s".format(startTime, endTime)
+        return if (occurrences != null) "R${occurrences.pad(2)}/PT${startTime}A${endTime}" else  "R/PT${startTime}A${endTime}"
+    }
+}
+
+private fun Int.pad(digits: Int): String {
+    val initial = toString()
+
+    return when {
+        initial.length == digits -> initial
+        initial.length < digits -> "0".repeat(digits - initial.length) + initial
+        else -> throw IllegalArgumentException("Value is too large <$this>")
     }
 }
 

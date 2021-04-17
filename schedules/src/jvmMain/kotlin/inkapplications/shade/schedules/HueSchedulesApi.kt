@@ -7,6 +7,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import kotlinx.serialization.json.JsonObject
 
 /**
  * API Access for Hue's Schedules
@@ -31,7 +32,7 @@ internal interface HueSchedulesApi {
         token: String,
         schedule: String,
         modification: ScheduleModification
-    ): HueResponse<HueProperties>
+    ): HueResponse<JsonObject>
 
     /**
      * Gets all attributes for a schedule.

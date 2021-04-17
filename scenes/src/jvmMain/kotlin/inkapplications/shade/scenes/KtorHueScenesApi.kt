@@ -1,12 +1,12 @@
 package inkapplications.shade.scenes
 
-import inkapplications.shade.constructs.HueProperties
 import inkapplications.shade.constructs.HueResponse
 import inkapplications.shade.constructs.HueResult
 import inkapplications.shade.constructs.IdToken
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlinx.serialization.json.JsonObject
 
 internal class KtorHueScenesApi(
     private val client: HttpClient,
@@ -37,7 +37,7 @@ internal class KtorHueScenesApi(
         }
     }
 
-    override suspend fun updateScene(token: String, sceneId: String, scene: UpdateScene.LightScene): HueResponse<HueProperties> {
+    override suspend fun updateScene(token: String, sceneId: String, scene: UpdateScene.LightScene): HueResponse<JsonObject> {
         return client.put("api/$token/scenes/$sceneId") {
             accept(ContentType.Application.Json)
             contentType(ContentType.Application.Json)
@@ -45,7 +45,7 @@ internal class KtorHueScenesApi(
         }
     }
 
-    override suspend fun updateScene(token: String, sceneId: String, scene: UpdateScene.GroupScene): HueResponse<HueProperties> {
+    override suspend fun updateScene(token: String, sceneId: String, scene: UpdateScene.GroupScene): HueResponse<JsonObject> {
         return client.put("api/$token/scenes/$sceneId") {
             accept(ContentType.Application.Json)
             contentType(ContentType.Application.Json)

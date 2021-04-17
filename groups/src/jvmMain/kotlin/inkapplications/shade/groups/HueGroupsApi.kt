@@ -9,6 +9,7 @@ import inkapplications.spondee.math.Percentage
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
@@ -82,7 +83,7 @@ internal interface HueGroupsApi {
         token: String,
         groupId: String,
         attributes: MutableGroupAttributes
-    ): HueResponse<HueProperties>
+    ): HueResponse<JsonObject>
 
     /**
      * Modifies the state of all lights in a group.
@@ -94,7 +95,7 @@ internal interface HueGroupsApi {
         token: String,
         groupId: String,
         state: GroupStateModification
-    ): HueResponse<HueProperties>
+    ): HueResponse<JsonObject>
 
     /**
      * Deletes the specified group from the bridge.

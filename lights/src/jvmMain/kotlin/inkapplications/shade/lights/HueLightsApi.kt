@@ -16,6 +16,7 @@ import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
@@ -59,7 +60,7 @@ internal interface HueLightsApi {
         token: String,
         lightId: String,
         modification: LightStateModification,
-    ): HueResponse<HueProperties>
+    ): HueResponse<JsonObject>
 
     /**
      * Gets a list of lights that were discovered the last time a
@@ -87,14 +88,14 @@ internal interface HueLightsApi {
      * @param criteria Serial numbers of lights to search for.
      * @return a pretty useless map that just contains the endpoint that was hit.
      */
-    suspend fun searchLights(token: String, criteria: LightSearchCriteria): HueResponse<HueProperties>
+    suspend fun searchLights(token: String, criteria: LightSearchCriteria): HueResponse<JsonObject>
 
     /**
      * Starts searching for new lights.
      *
      * @see HueLightsApi.searchLights(StringIndexOutOfBoundsException, LightSearchCriteria)
      */
-    suspend fun searchLights(token: String): HueResponse<HueProperties>
+    suspend fun searchLights(token: String): HueResponse<JsonObject>
 
     /**
      * Gets the attributes and state of a given light.
@@ -118,7 +119,7 @@ internal interface HueLightsApi {
         token: String,
         lightId: String,
         attributes: DeviceAttributes,
-    ): HueResponse<HueProperties>
+    ): HueResponse<JsonObject>
 
     /**
      * Deletes a light from the bridge.

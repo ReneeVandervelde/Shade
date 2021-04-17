@@ -1,8 +1,5 @@
 package inkapplications.shade.constructs
 
-import java.io.PrintStream
-import java.io.PrintWriter
-import java.lang.RuntimeException
 
 /**
  * Base/General class for all exceptions specific to shade.
@@ -27,22 +24,7 @@ class UnknownException(
 /**
  * Wrapper for multiple errors returned by the API
  */
-open class ShadeCompositeApiError(val hueErrors: List<ShadeApiError>): ShadeException("Multiple Hue API Errors occurred") {
-    override fun printStackTrace() {
-        super.printStackTrace()
-        hueErrors.forEach { it.printStackTrace() }
-    }
-
-    override fun printStackTrace(stream: PrintStream?) {
-        super.printStackTrace(stream)
-        hueErrors.forEach { it.printStackTrace(stream) }
-    }
-
-    override fun printStackTrace(writer: PrintWriter?) {
-        super.printStackTrace(writer)
-        hueErrors.forEach { it.printStackTrace(writer) }
-    }
-}
+open class ShadeCompositeApiError(val hueErrors: List<ShadeApiError>): ShadeException("Multiple Hue API Errors occurred")
 
 /**
  * Convert a list of API errors into an API Exception.
