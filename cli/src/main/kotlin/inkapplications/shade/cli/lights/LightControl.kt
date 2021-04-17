@@ -10,8 +10,8 @@ import com.github.ajalt.clikt.parameters.types.long
 import dagger.Reusable
 import inkapplications.shade.Shade
 import inkapplications.shade.constructs.kelvin
-import inkapplications.shade.constructs.percent
 import inkapplications.shade.lights.LightStateModification
+import inkapplications.spondee.math.percent
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import kotlin.time.ExperimentalTime

@@ -15,6 +15,7 @@ kotlin {
                 implementation("com.soywiz.korlibs.klock:klock:2.0.7")
                 implementation(Ktor.client)
                 api("com.github.ajalt.colormath:colormath:2.0.0")
+                api("com.github.inkapplications.spondee:math:7144fd679a")
 
                 implementation(KotlinX.Serialization.json)
                 implementation(Ktor.client)

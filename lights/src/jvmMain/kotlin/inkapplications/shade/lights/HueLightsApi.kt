@@ -8,6 +8,7 @@ import inkapplications.shade.lights.AlertState.*
 import inkapplications.shade.lights.ColorMode.*
 import inkapplications.shade.lights.LightEffect.COLOR_LOOP
 import inkapplications.shade.lights.LightEffect.NONE
+import inkapplications.spondee.math.Percentage
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -266,6 +267,7 @@ data class LightStartupConfig(
 @Serializable
 data class LightCustomStartupSettings(
     @SerialName("bri")
+    @Serializable(with = PercentageSerializer::class)
     val brightness: Percentage? = null,
 
     @SerialName("xy")
@@ -277,6 +279,7 @@ data class LightCustomStartupSettings(
     val hue: Int? = null,
 
     @SerialName("sat")
+    @Serializable(with = PercentageSerializer::class)
     val saturation: Percentage? = null,
 )
 
@@ -375,11 +378,13 @@ data class LightState(
     val on: Boolean,
 
     @SerialName("bri")
+    @Serializable(with = PercentageSerializer::class)
     val brightness: Percentage? = null,
 
     val hue: Int? = null,
 
     @SerialName("sat")
+    @Serializable(with = PercentageSerializer::class)
     val saturation: Percentage? = null,
 
     val effect: LightEffect? = null,
@@ -476,11 +481,13 @@ data class LightStateModification(
     val on: Boolean? = null,
 
     @SerialName("bri")
+    @Serializable(with = PercentageSerializer::class)
     val brightness: Percentage? = null,
 
     val hue: Int? = null,
 
     @SerialName("sat")
+    @Serializable(with = PercentageSerializer::class)
     val saturation: Percentage? = null,
 
     val effect: LightEffect? = null,
@@ -498,9 +505,11 @@ data class LightStateModification(
     val alert: AlertState? = null,
 
     @SerialName("bri_inc")
+    @Serializable(with = PercentageSerializer::class)
     val brightnessIncrement: Percentage? = null,
 
     @SerialName("sat_inc")
+    @Serializable(with = PercentageSerializer::class)
     val saturationIncrement: Percentage? = null,
 
     @SerialName("hue_inc")

@@ -5,6 +5,7 @@ import inkapplications.shade.constructs.serialization.DurationDecisecondSerializ
 import inkapplications.shade.lights.AlertState
 import inkapplications.shade.lights.LightEffect
 import inkapplications.shade.lights.LightState
+import inkapplications.spondee.math.Percentage
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -566,11 +567,13 @@ data class GroupStateModification(
     val on: Boolean? = null,
 
     @SerialName("bri")
+    @Serializable(with = PercentageSerializer::class)
     val brightness: Percentage? = null,
 
     val hue: Int? = null,
 
     @SerialName("sat")
+    @Serializable(with = PercentageSerializer::class)
     val saturation: Percentage? = null,
 
     val effect: LightEffect? = null,
@@ -588,9 +591,11 @@ data class GroupStateModification(
     val alert: AlertState? = null,
 
     @SerialName("bri_inc")
+    @Serializable(with = PercentageSerializer::class)
     val brightnessIncrement: Percentage? = null,
 
     @SerialName("sat_inc")
+    @Serializable(with = PercentageSerializer::class)
     val saturationIncrement: Percentage? = null,
 
     @SerialName("hue_inc")
