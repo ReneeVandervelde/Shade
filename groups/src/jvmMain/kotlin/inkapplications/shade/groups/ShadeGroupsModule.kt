@@ -28,12 +28,15 @@ class ShadeGroupsModule() {
      * @param tokenStorage A place to read/write the auth token used for requests.
      */
     fun createGroups(baseUrl: String, tokenStorage: TokenStorage): ShadeGroups {
+        val json = kotlinx.serialization.json.Json {
+            ignoreUnknownKeys = true
+        }
         val httpClient = HttpClient {
             defaultRequest {
                 url("$baseUrl${url.encodedPath.trimStart('/')}")
             }
             install(JsonFeature) {
-                serializer = KotlinxSerializer()
+                serializer = KotlinxSerializer(json)
             }
         }
         val api = KtorHueGroupsApi(httpClient)
