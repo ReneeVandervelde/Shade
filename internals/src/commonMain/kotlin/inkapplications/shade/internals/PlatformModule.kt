@@ -15,8 +15,8 @@ expect class PlatformModule(
     json: Json,
     logger: KimchiLogger = EmptyLogger,
 ) {
-    /**
-     * Create Ktor http engine based on the platform.
-     */
+    @Deprecated("Ktor is no longer used and will be removed in the next version.")
     fun createEngine(securityStrategy: SecurityStrategy): HttpClientEngineFactory<*>
+
+    val httpClient: HueHttpClient
 }

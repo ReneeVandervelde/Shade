@@ -29,5 +29,5 @@ class InternalsModule(
     /**
      * HttpClient initialized to be configured by the [configurationContainer].
      */
-    val hueHttpClient: HueHttpClient = configurableHttpClient
+    val hueHttpClient: HueHttpClient = platformModule.httpClient
 }
